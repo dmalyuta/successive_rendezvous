@@ -25,7 +25,7 @@ t_f = [150,250,350,450] # [s] Rendezvous duration
 
 data = {key:None for key in t_f}
 for _tf in t_f:
-    with open('data/tf_%d_tc_2_v2.pkl'%(_tf),'rb') as f:
+    with open('data/tf_%d_tc_2.pkl'%(_tf),'rb') as f:
         data[_tf] = pickle.load(f)
 
 idx = 0

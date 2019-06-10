@@ -20,7 +20,7 @@ import tools
 matplotlib.rc('font',**{'family':'serif','size':14})
 matplotlib.rc('text', usetex=True)
 
-with open('data/tf_150_tc_2_v2.pkl','rb') as f:
+with open('data/tf_150_tc_2.pkl','rb') as f:
     data = pickle.load(f)
 
 csm = ApolloCSM()

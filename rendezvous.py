@@ -633,5 +633,5 @@ if __name__=='__main__':
     outputs = solve_rendezvous(csm,inputs)
 
     result = dict(solver_input=[inputs],solver_output=[outputs])
-    with open('data/tf_%d_tc_%d_v2.pkl'%(t_f,t_silent),'wb') as f:
+    with open('data/tf_%d_tc_%d.pkl'%(t_f,t_silent),'wb') as f:
         pickle.dump(result,f)
