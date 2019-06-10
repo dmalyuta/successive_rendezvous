@@ -1,4 +1,4 @@
-# Approximate Multiparametric Mixed-integer Convex Programming
+# Fast Fuel Optimal Rendezvous Trajectory Generation
 
 <p align="center">
 	<img width="500" src="/figures/readme_image.png?raw=true">
