@@ -1,0 +1,4 @@
+cython==0.29.7
+cvxpy==1.0.24
+progressbar2==3.39.2
+matplotlib==3.0.3

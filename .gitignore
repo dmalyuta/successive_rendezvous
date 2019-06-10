@@ -1,2 +1,3 @@
 /figures/*
 !/*/.gitkeep
+!/figures/readme_image.png
