@@ -31,6 +31,7 @@ csm = ApolloCSM()
 t_f = tools.get_values(data,'solver_input','t_f')[0]
 q_f = tools.get_values(data,'solver_input','xf')[0]['q']
 t_pulse_max = tools.get_values(data,'solver_input','t_pulse_max')[0]
+r_a = tools.get_values(data,'solver_input','r_app')[0]
 
 idx = 0
 t_sol = tools.get_values(data,'solver_output','optimizer','t')[idx]
@@ -58,25 +59,36 @@ rpy_sol = np.column_stack([tools.q2rpy(q_sol.T[k])
 rpy_nl = np.column_stack([tools.q2rpy(q_nl.T[k])
                           for k in range(q_nl.shape[1])])
 
+time_app = np.array([t_nl[k] for k in range(p_nl.shape[1])
+                     if la.norm(p_nl[:,k]-p_nl[:,-1])<r_a])
+
 # translation
 fig = plt.figure(1)
 plt.clf()
 ax = fig.add_subplot(211)
 ax.grid()
-ax.plot(t_sol,p_sol[0],color='red',linewidth=1,linestyle='--')
-ax.plot(t_sol,p_sol[1],color='green',linewidth=1,linestyle='--')
-ax.plot(t_sol,p_sol[2],color='blue',linewidth=1,linestyle='--')
+ax.plot(t_sol,p_sol[0],color='red',linestyle='none',marker='.',markersize=5)
+ax.plot(t_sol,p_sol[1],color='green',linestyle='none',marker='.',markersize=5)
+ax.plot(t_sol,p_sol[2],color='blue',linestyle='none',marker='.',markersize=5)
 ax.plot(t_nl,p_nl[0],color='red')
 ax.plot(t_nl,p_nl[1],color='green')
 ax.plot(t_nl,p_nl[2],color='blue')
 ax.set_xlabel('Time $t$ [s]')
 ax.set_ylabel('Position [m]')
 ax.autoscale(tight=True)
+y_lim = ax.get_ylim()
+x_lim = ax.get_xlim()
+ax.fill_between(time_app,
+                np.repeat(y_lim[0],time_app.size),
+                np.repeat(y_lim[1],time_app.size),
+                linewidth=0,color='black',alpha=0.2,zorder=1)
+ax.set_xlim(x_lim)
+ax.set_ylim(y_lim)
 ax = fig.add_subplot(212)
 ax.grid()
-ax.plot(t_sol,v_sol[0],color='red',linewidth=1,linestyle='--')
-ax.plot(t_sol,v_sol[1],color='green',linewidth=1,linestyle='--')
-ax.plot(t_sol,v_sol[2],color='blue',linewidth=1,linestyle='--')
+ax.plot(t_sol,v_sol[0],color='red',linestyle='none',marker='.',markersize=5)
+ax.plot(t_sol,v_sol[1],color='green',linestyle='none',marker='.',markersize=5)
+ax.plot(t_sol,v_sol[2],color='blue',linestyle='none',marker='.',markersize=5)
 ax.plot(t_nl,v_nl[0],color='red')
 ax.plot(t_nl,v_nl[1],color='green')
 ax.plot(t_nl,v_nl[2],color='blue')
@@ -84,6 +96,14 @@ ax.set_xlabel('Time $t$ [s]')
 ax.set_ylabel('Velocity [m/s]')
 ax.autoscale(tight=True)
 plt.tight_layout()
+y_lim = ax.get_ylim()
+x_lim = ax.get_xlim()
+ax.fill_between(time_app,
+                np.repeat(y_lim[0],time_app.size),
+                np.repeat(y_lim[1],time_app.size),
+                linewidth=0,color='black',alpha=0.2,zorder=1)
+ax.set_xlim(x_lim)
+ax.set_ylim(y_lim)
 plt.show(block=False)
 
 fig.savefig('./figures/translation.pdf',
@@ -94,20 +114,28 @@ fig = plt.figure(2)
 plt.clf()
 ax = fig.add_subplot(211)
 ax.grid()
-ax.plot(t_sol,np.unwrap(rpy_sol[0],discont=359.)-360.,color='red',linestyle='--',linewidth=1)
-ax.plot(t_sol,rpy_sol[1],color='green',linestyle='--',linewidth=1)
-ax.plot(t_sol,rpy_sol[2],color='blue',linestyle='--',linewidth=1)
+ax.plot(t_sol,np.unwrap(rpy_sol[0],discont=359.)-360.,color='red',linestyle='none',marker='.',markersize=5)
+ax.plot(t_sol,rpy_sol[1],color='green',linestyle='none',marker='.',markersize=5)
+ax.plot(t_sol,rpy_sol[2],color='blue',linestyle='none',marker='.',markersize=5)
 ax.plot(t_nl,np.unwrap(rpy_nl[0],discont=359.)-360.,color='red')
 ax.plot(t_nl,rpy_nl[1],color='green')
 ax.plot(t_nl,rpy_nl[2],color='blue')
 ax.set_xlabel('Time $t$ [s]')
 ax.set_ylabel('Roll, pitch, yaw [$^\circ$]')
 ax.autoscale(tight=True)
+y_lim = ax.get_ylim()
+x_lim = ax.get_xlim()
+ax.fill_between(time_app,
+                np.repeat(y_lim[0],time_app.size),
+                np.repeat(y_lim[1],time_app.size),
+                linewidth=0,color='black',alpha=0.2,zorder=1)
+ax.set_xlim(x_lim)
+ax.set_ylim(y_lim)
 ax = fig.add_subplot(212)
 ax.grid()
-ax.plot(t_sol,np.rad2deg(omega_sol[0]),color='red',linestyle='--',linewidth=1)
-ax.plot(t_sol,np.rad2deg(omega_sol[1]),color='green',linestyle='--',linewidth=1)
-ax.plot(t_sol,np.rad2deg(omega_sol[2]),color='blue',linestyle='--',linewidth=1)
+ax.plot(t_sol,np.rad2deg(omega_sol[0]),color='red',linestyle='none',marker='.',markersize=5)
+ax.plot(t_sol,np.rad2deg(omega_sol[1]),color='green',linestyle='none',marker='.',markersize=5)
+ax.plot(t_sol,np.rad2deg(omega_sol[2]),color='blue',linestyle='none',marker='.',markersize=5)
 ax.plot(t_nl,np.rad2deg(omega_nl[0]),color='red')
 ax.plot(t_nl,np.rad2deg(omega_nl[1]),color='green')
 ax.plot(t_nl,np.rad2deg(omega_nl[2]),color='blue')
@@ -115,6 +143,14 @@ ax.set_xlabel('Time $t$ [s]')
 ax.set_ylabel('Angular velocity [$^\circ$/s]')
 ax.autoscale(tight=True)
 plt.tight_layout()
+y_lim = ax.get_ylim()
+x_lim = ax.get_xlim()
+ax.fill_between(time_app,
+                np.repeat(y_lim[0],time_app.size),
+                np.repeat(y_lim[1],time_app.size),
+                linewidth=0,color='black',alpha=0.2,zorder=1)
+ax.set_xlim(x_lim)
+ax.set_ylim(y_lim)
 plt.show(block=False)
 
 fig.savefig('./figures/attitude.pdf',
@@ -142,6 +178,15 @@ for i in range(4): # quad number
         plt.yticks(yticks,yticks)
         plt.xticks(xticks,xticks)
         ax.set_ylim([0,t_pulse_max*1.1*1e3])
+        if 'p_f' in csm.i2thruster[4*i+j]:
+            y_lim = ax.get_ylim()
+            x_lim = ax.get_xlim()
+            ax.fill_between(time_app,
+                            np.repeat(y_lim[0],time_app.size),
+                            np.repeat(y_lim[1],time_app.size),
+                            linewidth=0,color='black',alpha=0.2,zorder=1)
+            ax.set_xlim(x_lim)
+            ax.set_ylim(y_lim)
         
 plt.tight_layout()
 plt.show(block=False)
