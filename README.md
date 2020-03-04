@@ -1,6 +1,10 @@
 # Fast Fuel Optimal Rendezvous Trajectory Generation
 
 <p align="center">
+	<a href="https://youtu.be/vU1nBL2cg04">View a video of the optimized trajectory</a>
+</p>
+
+<p align="center">
 	<img width="500" src="/figures/readme_image.png?raw=true">
 </p>
 <p align="center" width="600">
@@ -19,7 +23,16 @@ of the command and service module with the lunar module, submitted to [AIAA
 SciTech 2020](https://www.aiaa.org/SciTech).
 
 ``` 
-TODO add arXiv article
+@inproceedings{Malyuta2020,
+  doi = {10.2514/6.2020-0616},
+  url = {https://doi.org/10.2514/6.2020-0616},
+  year = {2020},
+  month = jan,
+  publisher = {American Institute of Aeronautics and Astronautics},
+  author = {Danylo Malyuta and Taylor Reynolds and Michael Szmuk and Behcet Acikmese and Mehran Mesbahi},
+  title = {Fast Trajectory Optimization via Successive Convexification for Spacecraft Rendezvous with Integer Constraints},
+  booktitle = {{AIAA} Scitech 2020 Forum}
+}
 ```
 
 ## Requirements
